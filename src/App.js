@@ -4,10 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Navigatebar from './components/navbar/navbar.component';
 import SearchBox from './components/search-box/searchBox.component';
-import SearchPage from './pages/Search/Search.page';
 import ComparisonPage from './pages/Comparision/Comparision.page';
 import CardsContainer from './components/cardsContainer/cardsContainer.component';
-// import Pagination from 'react-bootstrap/Pagination';
 import {DropdownButton, Dropdown, Pagination, Navbar} from 'react-bootstrap';
 
 const pageCards = [6, 9, 12, 15];
