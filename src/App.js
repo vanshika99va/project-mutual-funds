@@ -162,8 +162,7 @@ class App extends React.Component {
                         currentSearchInput = { currentSearchInput }
                         onSubmitSearch = {this.getSearchInput} /> 
                     < h4 >
-                    mutualFunds.length? Mutual Funds selected for comparision: { selectedForComparision.length } 
-                    : click on Title to select
+                        Mutual Funds selected for comparision: { selectedForComparision.length }
                      </h4> 
                     < h4 > {
                         mutualFunds.length ?

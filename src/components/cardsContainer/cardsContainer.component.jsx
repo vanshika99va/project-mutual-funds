@@ -9,18 +9,20 @@ import {CardColumns} from 'react-bootstrap';
 const CardsContainer = ({list, selectedForComparision, bringInForComparision, removeFromComparision}) => {
     
     return (
-        <CardColumns>
-            {
-                list.map(mutualFund => (
-                    <MutualFundCard 
-                        key={mutualFund.id} 
-                        {...mutualFund} 
-                        selectedForComparision={selectedForComparision}
-                        bringInForComparision={bringInForComparision}
-                        removeFromComparision={removeFromComparision}/>
-                ))
-            }
-        </CardColumns>
+        <div style = {{margin:"10rem 10rem 10rem 10rem"}}>
+            <CardColumns>
+                {
+                    list.map(mutualFund => (
+                        <MutualFundCard 
+                            key={mutualFund.id} 
+                            {...mutualFund} 
+                            selectedForComparision={selectedForComparision}
+                            bringInForComparision={bringInForComparision}
+                            removeFromComparision={removeFromComparision}/>
+                    ))
+                }
+            </CardColumns>
+        </div>
     )
 }
 

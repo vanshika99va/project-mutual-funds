@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 
 import './comparison-table.styles.scss';
 
 import { Table } from 'react-bootstrap';
 
 import Accordion from 'react-bootstrap/Accordion';
-import {Card} from 'react-bootstrap';
+//import {Card} from 'react-bootstrap';
 
 export const ComparisonTable = ( {fundsToBeCompared} ) => {
      console.log(fundsToBeCompared);
@@ -27,16 +27,16 @@ export const ComparisonTable = ( {fundsToBeCompared} ) => {
                         ({id, minimum_investment, name, category, rating, return_3yr, return_5yr, riskometer}) =>
                             (<Fragment>
                                 <Accordion.Toggle as="tr" id={"rows"+id} eventKey={id} onClick={(a) => {
-                                var i;
-                                for(i = 0; i < fundsToBeCompared.length; i++){
-                                    if(a.currentTarget.id.slice(4,a.currentTarget.id.length)==fundsToBeCompared[i].id){}
-                                    else{
-                                        document.getElementById("row"+fundsToBeCompared[i].id).style.display="none";
+                                    var i;
+                                    for(i = 0; i < fundsToBeCompared.length; i++){
+                                        if(a.currentTarget.id.slice(4,a.currentTarget.id.length)===fundsToBeCompared[i].id){}
+                                        else{
+                                            document.getElementById("row"+fundsToBeCompared[i].id).style.display="none";
+                                        }
                                     }
-                                }
-                                    document.getElementById("row"+a.currentTarget.id.slice(4,a.currentTarget.id.length)).style.display=document.getElementById("row"+a.currentTarget.id.slice(4,a.currentTarget.id.length)).style.display==="none"?"":"none";}}>
-                                <td>
-                                 {name}  </td>
+                                        document.getElementById("row"+a.currentTarget.id.slice(4,a.currentTarget.id.length)).style.display
+                                        = document.getElementById("row"+a.currentTarget.id.slice(4,a.currentTarget.id.length)).style.display==="none"?"":"none";}}>
+                                            <td> {name}  </td>
                                             
                                             <td> {category} </td>
                                             <td> {rating} </td>
