@@ -9,7 +9,7 @@ import {CardColumns} from 'react-bootstrap';
 const CardsContainer = ({list, selectedForComparision, bringInForComparision, removeFromComparision}) => {
     
     return (
-        <div style = {{margin:"10rem 10rem 10rem 10rem"}}>
+        <div style = {{margin:"6rem 8rem 8rem 4rem"}}>
             <CardColumns>
                 {
                     list.map(mutualFund => (

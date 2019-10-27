@@ -162,7 +162,9 @@ class App extends React.Component {
                         currentSearchInput = { currentSearchInput }
                         onSubmitSearch = {this.getSearchInput} /> 
                     < h5 >
-                        Mutual Funds for comparison selected : {selectedForComparision.length}
+                    {
+                        selectedForComparision.length ? "Mutual Funds for comparison selected :" + selectedForComparision.length : "Click on title to select"
+                    }
                      </ h5 > 
                      
                     < h5 > 
@@ -171,7 +173,7 @@ class App extends React.Component {
                         `Here are your mutual fund results` : `No Result Found`
                     }  
                     </h5>
-                    
+                    <div style={{margin: "1rem 10rem 2rem"}}>
                     < DropdownButton id = "dropdown-basic-button"
                     title = "Cards On Page" > {
                         pageCards.map(n => ( 
@@ -187,7 +189,7 @@ class App extends React.Component {
                         ))
                     } 
                     </DropdownButton>
-
+                    </div>
                     
                     < Pagination>
                     
