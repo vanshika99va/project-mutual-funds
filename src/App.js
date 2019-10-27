@@ -8,7 +8,7 @@ import SearchPage from './pages/Search/Search.page';
 import ComparisonPage from './pages/Comparision/Comparision.page';
 import CardsContainer from './components/cardsContainer/cardsContainer.component';
 // import Pagination from 'react-bootstrap/Pagination';
-import {DropdownButton, Dropdown, Pagination, Navbar, Nav} from 'react-bootstrap';
+import {DropdownButton, Dropdown, Pagination, Navbar} from 'react-bootstrap';
 
 const pageCards = [6, 9, 12, 15];
 
@@ -111,8 +111,9 @@ class App extends React.Component {
     bringInForComparision = (mutualFund) => {
 
         let array = this.state.selectedForComparision;
-
-        array.push(mutualFund);
+        if (array.length < 5){
+            array.push(mutualFund);
+        }
 
         this.setState({
             selectedForComparision: array
@@ -176,11 +177,11 @@ class App extends React.Component {
                 <Pagination>
                     {new Array(this.state.numOfPages).fill(1).map((a, i) => (
                     <Pagination.Item 
-                        key={i} 
-                        active={i+1 === this.state.currentPage} 
-                        onClick={this.changePage}
+                        key= { i } 
+                        active= { i+1 === this.state.currentPage } 
+                        onClick= { this.changePage }
                     >
-                        {i+1} 
+                        { i+1 } 
                     </Pagination.Item>
                     ))}
                 </Pagination>
@@ -188,9 +189,9 @@ class App extends React.Component {
                 {mutualFunds.length !== 0 && 
                 <CardsContainer 
                     list = {this.renderPageCards(mutualFunds)}
-                    selectedForComparision={selectedForComparision} 
-                    bringInForComparision={this.bringInForComparision}
-                    removeFromComparision={this.removeFromComparision}
+                    selectedForComparision = {selectedForComparision} 
+                    bringInForComparision = {this.bringInForComparision}
+                    removeFromComparision = {this.removeFromComparision}
                 />}
 
 
@@ -206,15 +207,11 @@ class App extends React.Component {
 
         return ( 
           <div className = "App" >
-            <Navbar collapseOnSelect bg='light' >
-                <Navbar.Collapse id="responsive-navbar-nav"/>
-                <Nav className="mr-auto">
-                    <Nav.Link href="#search">Search</Nav.Link>
-                    <Nav.Link href="#compare">Compare</Nav.Link>
-                </Nav>
-            </Navbar>
+
+            <Navigatebar changeRoute = { this.changeRoute} />
             
             {currentPage}
+
             </div>
             
         );

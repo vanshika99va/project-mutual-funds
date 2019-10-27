@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './card.styles.scss'
+//import './card.styles.scss'
 
 import {Card,Table} from 'react-bootstrap';
 
@@ -31,9 +31,12 @@ export class MutualFundCard extends Component {
             this.setState((prevState) => ({selected: false}));
             this.props.removeFromComparision(this.props);
         }
-        else{
+        else if(this.props.selectedForComparision.length<5){
             this.setState((prevState) => ({selected: true}));
             this.props.bringInForComparision(this.props);
+        }
+        else{
+            alert(' 5 funds already selected !')
         }
     }
 
@@ -81,21 +84,21 @@ export class MutualFundCard extends Component {
                 // </div>
 //             </div>
 
-         <Card style={{width: '20 rem'}} className="text-center">
-             <Card.Header> 
-                <div className='header'>
-                        <div className='name'>
-                            <h4>{name}</h4>
-                            <span>Rating: {rating}/5</span>
-                        </div>
-                        <div className='select'>
-                            <div 
-                                className='radio' 
-                                style={{background:(this.state.selected?'blue':'#fff')}}
-                                onClick={this.selectForComparision}/>
-                            </div>
+         <Card 
+            bg="light"
+            style={{width: '15 rem', height: '20 rem'}} className="text-center" 
+         >
+             <Card.Header
+                style={{background : (this.state.selected ? '#4c8bf5' : '#eee')}}
+                onClick = {this.selectForComparision} > 
+                
+                <div className='name'>
+                    <h4>{name}</h4>
+                    <span>Rating: {rating}/5</span>
                 </div>
+
             </Card.Header>
+
             <Card.Body>
                 <Card.Text>
                     <Table>
