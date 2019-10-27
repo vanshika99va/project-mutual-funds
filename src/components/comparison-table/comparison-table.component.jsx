@@ -9,8 +9,9 @@ import {Card} from 'react-bootstrap';
 
 export const ComparisonTable = ( {fundsToBeCompared} ) => {
      console.log(fundsToBeCompared);
-    return (
+     return (
         <div className= 'comparision-table'>
+        <Accordion>
             <Table striped bordered hover responsive>
                 <thead>
                     <tr>
@@ -22,39 +23,40 @@ export const ComparisonTable = ( {fundsToBeCompared} ) => {
                     </tr>
                 </thead>
                 <tbody>
-                    
                     {fundsToBeCompared.map(
-                        ({id, name, category, rating, return_3yr, return_5yr,riskometer}) =>
-                            (<tr key={id}>
-                                <Accordion defaultActiveKey='0'>
-                                <Card>
-                                    <Accordion.Toggle as={Card.Header} eventKey="0">
-                                        
-                                            <td> {name} </td>
+                        ({id, minimum_investment, name, category, rating, return_3yr, return_5yr, riskometer}) =>
+                            (<Fragment>
+                                <Accordion.Toggle as="tr" id={"rows"+id} eventKey={id} onClick={(a) => {
+                                var i;
+                                for(i = 0; i < fundsToBeCompared.length; i++){
+                                    if(a.currentTarget.id.slice(4,a.currentTarget.id.length)==fundsToBeCompared[i].id){}
+                                    else{
+                                        document.getElementById("row"+fundsToBeCompared[i].id).style.display="none";
+                                    }
+                                }
+                                    document.getElementById("row"+a.currentTarget.id.slice(4,a.currentTarget.id.length)).style.display=document.getElementById("row"+a.currentTarget.id.slice(4,a.currentTarget.id.length)).style.display==="none"?"":"none";}}>
+                                <td>
+                                 {name}  </td>
+                                            
                                             <td> {category} </td>
                                             <td> {rating} </td>
                                             <td> {return_3yr} </td>
                                             <td> {return_5yr} </td>
-                                        
-                                    </Accordion.Toggle>
-                                    <Accordion.Collapse eventKey='1'>
-                                        <Card.Body>
-                                            <tr key={id}>
-                                                <td><b> Min. Subscription : </b></td>
-                                                <td>  minimun_investment</td>
-                                                <td><b> Risk : </b></td>
-                                                <td> {riskometer}</td>
-                                            </tr>
-                                        </Card.Body>
-                                    </Accordion.Collapse>
-                                </Card>
-                            </Accordion>
-                            </tr>)
-                        )} 
-                          
+                            </Accordion.Toggle>
+                            <tr id={"row"+id} style={{display:"none"}}>
+                                <td colSpan="5"><Accordion.Collapse eventKey={id}>
+                                    <Fragment><b> Min. Subscription : </b>
+                                  {minimum_investment}
+                                <b> Risk : </b>
+                                 {riskometer}</Fragment></Accordion.Collapse>
+                                </td>
+                            </tr>
+                    </Fragment>)
+                        )}   
                 </tbody>
                 
             </Table>
+        </Accordion>  
             
         </div>
     );
