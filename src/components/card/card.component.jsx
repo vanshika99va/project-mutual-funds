@@ -50,7 +50,7 @@ export class MutualFundCard extends Component {
 
          <Card 
             bg="light"
-            style={{width: '15 rem', height: '20 rem'}} className="text-center" 
+            style={{width: '15 rem', height: '20 rem', margin:'5 rem 5rem 5 rem 5 rem'}} className="text-center" 
          >
              <Card.Header
                 style={{background : (this.state.selected ? '#4c8bf5' : '#eee')}}

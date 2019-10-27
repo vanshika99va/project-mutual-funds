@@ -10,7 +10,7 @@ const CardsContainer = ({list, selectedForComparision, bringInForComparision, re
     
     return (
         <div style = {{margin:"6rem 8rem 8rem 4rem"}}>
-            <CardColumns>
+            <CardColumns style = {{margin: '5 rem 5 rem 5 rem 5 rem'}}>
                 {
                     list.map(mutualFund => (
                         <MutualFundCard 
