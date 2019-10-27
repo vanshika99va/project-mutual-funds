@@ -48,12 +48,33 @@ class App extends React.Component {
       if (pg <= this.state.numOfPages) this.setState({currentPage: pg});
     }
 
+    changePageFirst = () => {
+        this.setState({currentPage: 1});
+    }
+
+    changePageLast = () => {
+        this.setState({ currentPage: this.state.numOfPages });
+    }
+
+    renderPageButton(buttons) {
+        if(buttons.length < 5){
+            return buttons;
+        }
+        else if ( this.state.currentPage > buttons.length-3){
+            return buttons.slice(0,4);
+        }
+        else{
+            return buttons.slice(this.state.currentPage-3, this.state.currentPage +1);
+        }
+    }
+
+
 
     renderPageCards(funds){
       const {currentPage, cardsOnPage} = this.state;
-      const start = cardsOnPage*(currentPage-1);
-      const end = cardsOnPage*currentPage;
-      return funds.slice(start, end);
+      const start = cardsOnPage * (currentPage-1);
+      const end = cardsOnPage * currentPage;
+      return funds.slice (start, end);
     }
 
     componentDidMount = () => {
@@ -173,24 +194,39 @@ class App extends React.Component {
                  </DropdownButton>
 
                 <Pagination>
-                    {new Array(this.state.numOfPages).fill(1).map((a, i) => (
+                <Pagination.First onClick = {this.changePageFirst}/>
+                        {
+                            ((this.state.numOfPages>3) &&
+                            (this.state.currentPage > 3)) 
+                            ? <Pagination.Ellipsis/>
+                            : null 
+                        }{
+                            this.renderPageButton(new Array(this.state.numOfPages).fill(1).map((a, i) => (
                     <Pagination.Item 
-                        key= { i } 
+                        key= { i-1 } 
                         active= { i+1 === this.state.currentPage } 
                         onClick= { this.changePage }
                     >
                         { i+1 } 
                     </Pagination.Item>
-                    ))}
+                    )))} 
+                    {
+                        ( (this.state.numOfPages > 3) && 
+                          (this.state.currentPage < this.state.numOfPages -2 ))
+                            ? <Pagination.Ellipsis /> 
+                            : null
+                            
+                    }
+                    <Pagination.Last onClick = { this.changePageLast }/>
                 </Pagination>
 
-                {mutualFunds.length !== 0 && 
-                <CardsContainer 
-                    list = {this.renderPageCards(mutualFunds)}
-                    selectedForComparision = {selectedForComparision} 
-                    bringInForComparision = {this.bringInForComparision}
-                    removeFromComparision = {this.removeFromComparision}
-                />}
+                    {mutualFunds.length !== 0 && 
+                    <CardsContainer 
+                        list = {this.renderPageCards(mutualFunds)}
+                        selectedForComparision = {selectedForComparision} 
+                        bringInForComparision = {this.bringInForComparision}
+                        removeFromComparision = {this.removeFromComparision}
+                    />}
 
 
             </div>
@@ -199,12 +235,12 @@ class App extends React.Component {
             currentPage = 
             < ComparisonPage 
                 fundsToBeCompared = { this.state.selectedForComparision } 
-                clearFunds={this.clear}
+                clearFunds = { this.clear }
             />
         }
 
         return ( 
-          <div className = "App" >
+          < div className = "App" >
 
             <Navigatebar changeRoute = { this.changeRoute} />
             
