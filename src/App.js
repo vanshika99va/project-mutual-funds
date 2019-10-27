@@ -8,7 +8,7 @@ import SearchPage from './pages/Search/Search.page';
 import ComparisonPage from './pages/Comparision/Comparision.page';
 import CardsContainer from './components/cardsContainer/cardsContainer.component';
 // import Pagination from 'react-bootstrap/Pagination';
-import {DropdownButton, Dropdown, Pagination, Navbar} from 'react-bootstrap';
+import {DropdownButton, Dropdown, Pagination, Navbar, Nav} from 'react-bootstrap';
 
 const pageCards = [6, 9, 12, 15];
 
@@ -206,8 +206,14 @@ class App extends React.Component {
 
         return ( 
           <div className = "App" >
-            <Navbar changeRoute = { this.changeRoute }
-            />  
+            <Navbar collapseOnSelect bg='light' >
+                <Navbar.Collapse id="responsive-navbar-nav"/>
+                <Nav className="mr-auto">
+                    <Nav.Link href="#search">Search</Nav.Link>
+                    <Nav.Link href="#compare">Compare</Nav.Link>
+                </Nav>
+            </Navbar>
+            
             {currentPage}
             </div>
             

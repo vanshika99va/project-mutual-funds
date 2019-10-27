@@ -135,12 +135,11 @@ export class MutualFundCard extends Component {
             <Card.Footer>
                 <div className='footer'>
                     <div className='min-subscription'>
-                        <h5>&#8377;{minimum_investment}</h5>
-                        <p>Min Subscription</p>
+                        <h5>&#8377;{minimum_investment} <p>Min Subscription</p></h5>
                     </div>
                     <div className='risk'>
-                        <p>Risk</p>
-                        <p>{riskometer}</p>
+                        <p>Risk - {riskometer}</p>
+                        
                     </div>
                 </div>
             </Card.Footer>
