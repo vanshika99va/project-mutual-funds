@@ -4,9 +4,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Navigatebar from './components/navbar/navbar.component';
 import SearchBox from './components/search-box/searchBox.component';
+//import SearchPage from './pages/Search/Search.page';
 import ComparisonPage from './pages/Comparision/Comparision.page';
 import CardsContainer from './components/cardsContainer/cardsContainer.component';
-import {DropdownButton, Dropdown, Pagination, Navbar} from 'react-bootstrap';
+// import Pagination from 'react-bootstrap/Pagination';
+import { DropdownButton, Dropdown, Pagination } from 'react-bootstrap';
 
 const pageCards = [6, 9, 12, 15];
 
@@ -33,48 +35,41 @@ class App extends React.Component {
     }
 
     changeCardsOnPage = (n) => {
-      const funds = this.state.mutualFunds;
-      let numOfPages = Math.ceil(funds.length/n);
-      if (numOfPages === 0) numOfPages = 1;
-      this.setState({
-        cardsOnPage: parseInt(n),
-        currentPage: 1,
-        numOfPages: numOfPages
-      })
+        const funds = this.state.mutualFunds;
+        let numOfPages = Math.ceil(funds.length / n);
+        if (numOfPages === 0) numOfPages = 1;
+        this.setState({
+            cardsOnPage: parseInt(n),
+            currentPage: 1,
+            numOfPages: numOfPages
+        })
     }
 
     changePage = (e) => {
-      const pg = parseInt(e.target.text)
-      if (pg <= this.state.numOfPages) this.setState({currentPage: pg});
+        const pg = parseInt(e.target.text)
+        if (pg <= this.state.numOfPages) this.setState({ currentPage: pg });
     }
 
     changePageFirst = () => {
-        this.setState({currentPage: 1});
+        this.setState({ currentPage: 1 });
     }
 
     changePageLast = () => {
         this.setState({ currentPage: this.state.numOfPages });
     }
 
-    renderPageButton(buttons) {
-        if(buttons.length < 5){
-            return buttons;
-        }
-        else if ( this.state.currentPage > buttons.length-3){
-            return buttons.slice(0,4);
-        }
-        else{
-            return buttons.slice(this.state.currentPage-3, this.state.currentPage +1);
-        }
+
+    renderPageCards(funds) {
+        const { currentPage, cardsOnPage } = this.state;
+        const start = cardsOnPage * (currentPage - 1);
+        const end = cardsOnPage * currentPage;
+        return funds.slice(start, end);
     }
 
-
-
-    renderPageCards(funds){
-      const {currentPage, cardsOnPage} = this.state;
-      const start = cardsOnPage * (currentPage-1);
-      const end = cardsOnPage * currentPage;
-      return funds.slice (start, end);
+    renderPageButtons(buttons) {
+        if (buttons.legth < 5) { return buttons; } else if (this.state.currentPage < 3) return buttons.slice(0, 4);
+        else if (this.state.currentPage > buttons.length - 3) return buttons.slice(buttons.length - 4, buttons.length);
+        else return buttons.slice(this.state.currentPage - 3, this.state.currentPage + 1);
     }
 
     componentDidMount = () => {
@@ -90,7 +85,7 @@ class App extends React.Component {
             .then(response => response.json())
             .then(queryResult => queryResult.data.search_results)
             .then(funds => {
-                let numOfPages = Math.ceil(funds.length/this.state.cardsOnPage);
+                let numOfPages = Math.ceil(funds.length / this.state.cardsOnPage);
                 if (numOfPages === 0) numOfPages = 1;
                 this.setState({
                     mutualFunds: funds,
@@ -115,7 +110,7 @@ class App extends React.Component {
             .then(response => response.json())
             .then(queryResult => queryResult.data.search_results)
             .then(funds => {
-              let numOfPages = Math.ceil(funds.length/this.state.cardsOnPage);
+                let numOfPages = Math.ceil(funds.length / this.state.cardsOnPage);
                 if (numOfPages === 0) numOfPages = 1;
                 this.setState({
                     mutualFunds: funds,
@@ -130,8 +125,9 @@ class App extends React.Component {
     bringInForComparision = (mutualFund) => {
 
         let array = this.state.selectedForComparision;
-        if (array.length < 5){
+        if (array.length < 5) {
             array.push(mutualFund);
+
         }
 
         this.setState({
@@ -149,8 +145,8 @@ class App extends React.Component {
         })
     }
     clear = () => {
-        
-        this.setState({selectedForComparision: []});
+
+        this.setState({ selectedForComparision: [] });
     }
 
     render() {
@@ -159,95 +155,89 @@ class App extends React.Component {
         let currentPage = null;
 
         if (currentRoute === 'search') {
-            currentPage = (
-            <div className="search-page">
+            currentPage = ( < div className = "search-page" >
 
 
-                <SearchBox 
-                    currentSearchInput={currentSearchInput} 
-                    onSubmitSearch={this.getSearchInput}
-                />
-                <h4>
-                    Mutual Funds selected for comparision: {selectedForComparision.length}
-                </h4>
-                <h4>
-                    {mutualFunds.length?
-                        `Here are your mutual fund results`
-                        :`No Result Found`
-                    }
-                </h4>
+                    < SearchBox 
+                        currentSearchInput = { currentSearchInput }
+                        onSubmitSearch = {this.getSearchInput} /> 
+                    < h4 >
+                    Mutual Funds selected
+                    for comparision: { selectedForComparision.length } 
+                    </h4> 
+                    < h4 > {
+                        mutualFunds.length ?
+                        `Here are your mutual fund results` : `No Result Found`
+                    } 
+                    </h4>
 
-                <DropdownButton 
-                    id="dropdown-basic-button" 
-                    title="Cards On Page"
-                >
-                    {pageCards.map(n => (
-                        <Dropdown.Item 
-                            active={this.state.cardsOnPage === n} 
-                            key={n} 
-                            eventKey={n} 
-                            onSelect={this.changeCardsOnPage}
-                        >
-                            {n}
-                        </Dropdown.Item>
-                    ))}
-                 </DropdownButton>
+                    < DropdownButton id = "dropdown-basic-button"
+                    title = "Cards On Page" > {
+                        pageCards.map(n => ( 
+                            < Dropdown.Item 
+                                active = { this.state.cardsOnPage === n }
+                                key = { n }
+                                eventKey = { n }
+                                onSelect = { this.changeCardsOnPage } 
+                            > 
+                                { n } 
 
-                <Pagination>
-                <Pagination.First onClick = {this.changePageFirst}/>
+                            </Dropdown.Item>
+                        ))
+                    } 
+                    </DropdownButton>
+
+                    
+                    < Pagination>
+                    
+                    < Pagination.First onClick = { this.changePageFirst} /> 
+                    {((this.state.numOfPages > 3) && (this.state.currentPage > 3))
+                        ? < Pagination.Ellipsis /> : null} 
                         {
-                            ((this.state.numOfPages>3) &&
-                            (this.state.currentPage > 3)) 
-                            ? <Pagination.Ellipsis/>
-                            : null 
-                        }{
-                            this.renderPageButton(new Array(this.state.numOfPages).fill(1).map((a, i) => (
-                    <Pagination.Item 
-                        key= { i-1 } 
-                        active= { i+1 === this.state.currentPage } 
-                        onClick= { this.changePage }
-                    >
-                        { i+1 } 
-                    </Pagination.Item>
-                    )))} 
-                    {
-                        ( (this.state.numOfPages > 3) && 
-                          (this.state.currentPage < this.state.numOfPages -2 ))
-                            ? <Pagination.Ellipsis /> 
-                            : null
-                            
-                    }
-                    <Pagination.Last onClick = { this.changePageLast }/>
+                            this.renderPageButtons(new Array(this.state.numOfPages).fill(1).map((a, i) => ( 
+                                < Pagination.Item 
+                                    key = { i - 1 }
+                                    active = { i + 1 === this.state.currentPage }
+                                    onClick = { this.changePage } 
+                                > 
+                                    { i + 1 } 
+                                </Pagination.Item>
+                            )))
+                } {
+                    ((this.state.numOfPages > 3) && (this.state.currentPage < this.state.numOfPages - 2)) 
+                    ? < Pagination.Ellipsis/> : null
+
+                } 
+                < Pagination.Last onClick = { this.changePageLast } /> 
                 </Pagination>
 
-                    {mutualFunds.length !== 0 && 
-                    <CardsContainer 
-                        list = {this.renderPageCards(mutualFunds)}
-                        selectedForComparision = {selectedForComparision} 
-                        bringInForComparision = {this.bringInForComparision}
-                        removeFromComparision = {this.removeFromComparision}
+                {
+                    mutualFunds.length !== 0 &&
+                    <
+                    CardsContainer
+                    list = { this.renderPageCards(mutualFunds) }
+                    selectedForComparision = { selectedForComparision }
+                    bringInForComparision = { this.bringInForComparision }
+                    removeFromComparision = { this.removeFromComparision }
                     />}
 
 
-            </div>
-        )} 
-        else if (currentRoute === 'compare') {
-            currentPage = 
-            < ComparisonPage 
-                fundsToBeCompared = { this.state.selectedForComparision } 
-                clearFunds = { this.clear }
+                    
+                    </div>
+                )
+        } else if (currentRoute === 'compare') {
+            currentPage = <
+                ComparisonPage
+            fundsToBeCompared = { this.state.selectedForComparision }
+            clearFunds = { this.clear }
             />
         }
 
-        return ( 
-          < div className = "App" >
+        return ( < div className = "App" >
+            <
+            Navigatebar changeRoute = { this.changeRoute }
+            />   { currentPage } </div >
 
-            <Navigatebar changeRoute = { this.changeRoute} />
-            
-            {currentPage}
-
-            </div>
-            
         );
     }
 }
