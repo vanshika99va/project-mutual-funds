@@ -18,7 +18,7 @@ const ComparisonPage = ({fundsToBeCompared, clearFunds}) => {
             }
             {
                 fundsToBeCompared.length>0 ? 
-                < Button variant="secondary" onClick= {clearFunds}> CLEAR </Button> : null
+                < Button variant="primary" onClick= {clearFunds} style={{margin:'10rem 20 rem 20 rem 40 rem'}}> CLEAR </Button> : null
             }        
             </div>
         </Fragment>
