@@ -162,17 +162,16 @@ class App extends React.Component {
                         currentSearchInput = { currentSearchInput }
                         onSubmitSearch = {this.getSearchInput} /> 
                     < h5 >
-                        {
-                            selectedForComparison.length>0 ? `Mutual Funds selected for comparision - `{selectedForComparision.length }
-                        }
-                     </h5> 
-                     <br></br>
-                    < h5 > {
+                        Mutual Funds for comparison selected : {selectedForComparision.length}
+                     </ h5 > 
+                     
+                    < h5 > 
+                    {
                         mutualFunds.length ?
                         `Here are your mutual fund results` : `No Result Found`
-                    } 
+                    }  
                     </h5>
-
+                    
                     < DropdownButton id = "dropdown-basic-button"
                     title = "Cards On Page" > {
                         pageCards.map(n => ( 
